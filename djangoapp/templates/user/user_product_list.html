@@ -1,0 +1,39 @@
+{% extends "load_file.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}D_SHOPPING - TOP{% endblock %}
+
+{% block contents %}
+
+{% include 'include/user_header.html' %}
+
+<main role="main">
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        {% for p in page_obj %}
+        <a href="{% url 'user_product_details' p.id %}" class="col-md-3">
+          <div class="card mb-4 shadow-sm">
+            {% if p.image %}
+            <img class="card-img-top" src="media/{{ p.image }}">
+            {% else %}
+            <img class="card-img-top" src="{% static 'images/no-image.jpg' %}">
+            {% endif %}
+            <div class="card-body border">
+              <p class="card-text">{{ p.name }}</p>
+              <p class="card-text">カテゴリー: {{ p.category.name }}</p>
+              <p class="card-text">価格: ￥{{ p.price }}</p>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include 'include/user_footer.html' %}
+
+{% endblock %}
+
+

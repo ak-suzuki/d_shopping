@@ -1,0 +1,74 @@
+{% extends "load_file.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}商品カテゴリー管理{% endblock %}
+
+{% block contents %}
+<div class="page-wrapper chiller-theme toggled">
+  {% include 'include/sidebar.html' %}
+  <div class="page-content">
+    <div class="container-fluid">
+      <h2>カテゴリー{% if add_flag %}追加{% else %}編集{% endif %}</h2>
+      <hr>
+      <form action="" method="post" id="input-form">
+      {% csrf_token %}
+        <div class="form-content py-4 px-5 bg-light">
+          <div class="form-group">
+            <label>カテゴリー名</label>
+            {{ form.name|add_class:"form-control"|attr:"placeholder:カテゴリー名" }}
+            <div class="form-row form-inline">
+              <div class="col-9">
+                {{ form.name.errors }}
+              </div>
+            </div>
+          </div>
+        </div><!-- form-content" -->
+        <div class="d-flex justify-content-between">
+          <div>
+            <a href="{% url 'category_list' %}?page={{ current_page }}" class="btn btn-primary btn my-3">一覧へ戻る</a>
+          </div>
+          <div>
+            {% if add_flag %}
+            <button type="submit" name="btn_add" class="btn btn-success btn my-3">登録</button>
+            {% else %}
+            <button type="button" class="btn btn-danger btn my-3" data-toggle="modal" data-target="#confirm-delete">削除</button>
+            <button type="submit" name="btn_edit" class="btn btn-success btn my-3">更新</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+
+      <!-- Modal -->
+      <form action="{% url 'category_delete' %}" method="post">
+      {% csrf_token %}
+        <input type="hidden" name="category_id" value="{{ category_id }}">
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">確認</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                関連するデータも削除されます。<br>よろしいですか？
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">いいえ</button>
+                <button type="submit" class="btn btn-danger" name="btn_delete" >はい</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Modal -->
+
+    </div>
+  </div><!-- page-content" -->
+</div><!-- page-wrapper -->
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/common.js' %}"></script>
+{% endblock %}

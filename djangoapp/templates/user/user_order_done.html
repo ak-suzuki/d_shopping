@@ -1,0 +1,34 @@
+{% extends "load_file.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% comment %} {% load humanize %} {% endcomment %}
+{% block title %}D_shopping - 注文完了画面{% endblock %}
+
+{% block contents %}
+
+{% include 'include/user_header.html' %}
+
+<main role="main">
+  <section class="px-4 py-5">
+    <div class="mx-auto w-50">
+      <h2 class="text-center">ご注文完了</h2>
+      <hr>
+      <div class="px-2">
+        <p class="text-center mb-4">{{ name }} 様</p>
+        <p class="text-center">ご注文ありがとうございます。</p>
+        <p class="text-center">{{ email_address }}に代金支払い情報をお送りいたしましたのでご確認ください。</p>
+        <p class="text-center">代金のご入金確認後、商品を発送させていただきます。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include 'include/user_footer.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/common.js' %}"></script>
+{% endblock %}
+
+
